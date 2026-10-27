@@ -9,6 +9,12 @@ export function weekdayOf(year, month, day) {
   return new Date(Date.UTC(year, month - 1, day)).getUTCDay();
 }
 
+/** 예식 시각 (한국 시간 기준 절대 시각, ms) */
+export function weddingInstant() {
+  const { year, month, day, hour, minute } = CONFIG.wedding;
+  return Date.UTC(year, month - 1, day, hour - 9, minute);
+}
+
 /** 예식 요일 인덱스 (0=일) */
 export function weddingWeekday() {
   const { year, month, day } = CONFIG.wedding;

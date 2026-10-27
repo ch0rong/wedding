@@ -31,7 +31,7 @@ const NAV = {
     const { lat, lng, name, address } = place;
     launch(
       `nmap://route/car?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(name)}&appname=${encodeURIComponent(location.hostname || 'wedding')}`,
-      `https://map.naver.com/p/search/${encodeURIComponent(address)}`,
+      place.naverPlaceUrl || `https://map.naver.com/p/search/${encodeURIComponent(address)}`,
     );
   },
   kakaomap() {
@@ -84,11 +84,53 @@ async function renderKakaoMap(container) {
     yAnchor: 2.6,
     content: `<div class="map-label">${escapeHtml(place.name)}</div>`,
   });
-  // 탭 전환 등으로 크기가 바뀌면 중심 재조정
+  // 화면 크기가 바뀌면 중심 재조정
   new ResizeObserver(() => {
     map.relayout();
     map.setCenter(coords);
   }).observe(container);
+}
+
+/** 카카오맵 '지도 퍼가기' (키 발급 불필요). 로더는 index.html에서 미리 불러온다 */
+function renderRoughmap(container) {
+  const { timestamp, key } = CONFIG.kakaoRoughmap;
+  const width = Math.round(container.clientWidth);
+  const height = Math.round(width * 0.75);
+  container.classList.add('is-roughmap');
+  container.innerHTML = `<div id="daumRoughmapContainer${timestamp}" class="root_daum_roughmap root_daum_roughmap_landing"></div>`;
+  new window.daum.roughmap.Lander({ timestamp, key, mapWidth: String(width), mapHeight: String(height) }).render();
+  return height; // 아래 '길찾기 · 지도 크게 보기' 줄은 잠금 막이 덮지 않도록 지도 높이만 돌려줌
+}
+
+/**
+ * 스크롤하다가 지도가 손가락에 끌려가지 않도록 기본은 잠금.
+ * 투명한 막으로 지도를 덮고, 자물쇠 버튼을 누르면 막을 걷는다.
+ */
+function setupMapLock(container, shieldHeight) {
+  const shield = document.createElement('div');
+  shield.className = 'map-shield';
+  if (shieldHeight) shield.style.height = `${shieldHeight}px`;
+  shield.innerHTML = '<p class="map-shield__msg">자물쇠 버튼을 눌러 잠금을 풀면<br>지도를 움직일 수 있어요</p>';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'map-lock';
+  btn.textContent = '🔒';
+  btn.setAttribute('aria-label', '지도 잠금 해제');
+
+  let timer;
+  shield.addEventListener('click', () => {
+    shield.classList.add('show-msg');
+    clearTimeout(timer);
+    timer = setTimeout(() => shield.classList.remove('show-msg'), 2200);
+  });
+  btn.addEventListener('click', () => {
+    const locked = shield.hidden;
+    shield.hidden = !locked;
+    btn.textContent = locked ? '🔒' : '🔓';
+    btn.setAttribute('aria-label', locked ? '지도 잠금 해제' : '지도 잠그기');
+  });
+  container.append(shield, btn);
 }
 
 function renderEmbedMap(container) {
@@ -127,10 +169,17 @@ export function initMap(mount) {
   mount.querySelector('[data-action=copy]').addEventListener('click', () => copyText(v.address, '주소가 복사되었습니다.'));
   mount.querySelectorAll('[data-nav]').forEach((btn) => btn.addEventListener('click', () => NAV[btn.dataset.nav]()));
 
+  // 지도 우선순위: 카카오 지도 퍼가기 → 카카오 JS 지도 → 구글 지도 임베드
   const container = mount.querySelector('#map');
-  if (CONFIG.kakaoJsKey) {
-    renderKakaoMap(container).catch(() => renderEmbedMap(container));
+  const rough = CONFIG.kakaoRoughmap || {};
+  if (rough.timestamp && rough.key && window.daum?.roughmap?.Lander) {
+    setupMapLock(container, renderRoughmap(container));
+  } else if (CONFIG.kakaoJsKey) {
+    renderKakaoMap(container)
+      .catch(() => renderEmbedMap(container))
+      .finally(() => setupMapLock(container));
   } else {
     renderEmbedMap(container);
+    setupMapLock(container);
   }
 }

@@ -330,36 +330,68 @@ a { color: inherit; }
    ========================================================= */
 .cal__date { margin: 0 0 28px; text-align: center; font-size: 15px; }
 .cal {
-  padding: 28px 18px 22px;
+  padding: 20px 12px 16px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
-.cal__month { margin: 0 0 16px; text-align: center; font-size: 18px; font-weight: 500; line-height: 1; color: var(--navy); }
 .cal__grid { display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 4px; text-align: center; }
 .cal__head { padding-bottom: 8px; font-size: 12px; color: var(--muted); }
 .cal__day {
   position: relative;
-  z-index: 0;
   display: grid;
   place-items: center;
-  height: 40px;
+  height: 42px;
   font-size: 14px;
 }
-.is-sun { color: #c0504d; }
-.cal__day.is-wedding { color: #fff; font-weight: 600; }
-.cal__day.is-wedding::before {
+.is-holiday { color: #d9534f; }
+.is-sat { color: #4a7bc8; }
+.cal__day.is-wedding b { position: relative; z-index: 1; font-weight: 700; color: var(--text); }
+
+/* 예식일 하트 (마름모 + 원 2개), 두근두근 */
+.cal__heart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -8px 0 0 -11px;
+  background: #ffd6dd;
+  transform: rotate(45deg);
+  animation: heart-beat 1.8s ease-in-out infinite;
+}
+.cal__heart::before,
+.cal__heart::after {
   content: '';
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  width: 36px;
-  height: 36px;
-  margin: auto;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  background: var(--point);
+  background: inherit;
 }
-.dday { margin: 28px 0 0; text-align: center; font-size: 15px; }
-.dday b { color: var(--point); font-weight: 600; }
+.cal__heart::before { top: -50%; left: 0; }
+.cal__heart::after { top: 0; left: -50%; }
+@keyframes heart-beat {
+  0%, 100% { transform: rotate(45deg) scale(1); }
+  15% { transform: rotate(45deg) scale(1.15); }
+  30% { transform: rotate(45deg) scale(1); }
+  45% { transform: rotate(45deg) scale(1.1); }
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 32px 0 0;
+  text-align: center;
+}
+.countdown div { min-width: 52px; }
+.countdown span { display: block; font-size: 22px; font-weight: 500; line-height: 1.2; color: var(--navy); font-variant-numeric: tabular-nums; }
+.countdown small { font-size: 10px; letter-spacing: 0.15em; color: var(--muted); }
+.countdown i { font-style: normal; color: var(--muted); padding-bottom: 14px; }
+
+.dday { margin: 24px 0 0; text-align: center; font-size: 15px; }
+.dday b { color: #d9576b; font-weight: 600; }
 
 /* =========================================================
    8. Section 4 · 오시는 길
@@ -378,6 +410,49 @@ a { color: inherit; }
   background: #e9ecea;
 }
 .map iframe { width: 100%; height: 100%; border: 0; }
+.map { position: relative; }
+.map.is-roughmap { height: auto; }
+.map.is-roughmap .root_daum_roughmap { width: 100% !important; }
+
+/* 지도 잠금: 투명한 막 + 자물쇠 버튼 */
+.map-shield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+}
+.map.is-roughmap .map-shield { bottom: auto; }
+.map-shield__msg {
+  margin: 0;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.6;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.map-shield.show-msg .map-shield__msg { opacity: 1; }
+.map-lock {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 5;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+}
 .map__loading { display: grid; place-items: center; height: 100%; margin: 0; font-size: 13px; color: var(--muted); }
 .map-label {
   padding: 5px 12px;
@@ -624,5 +699,6 @@ a { color: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .cal__heart { animation: none; }
   .carousel__track, .lightbox__track, .accordion__panel { transition: none !important; }
 }
