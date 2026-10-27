@@ -1,5 +1,5 @@
-import { CONFIG } from '../config.js?v=202610271551';
-import { escapeHtml } from '../utils/dom.js?v=202610271551';
+import { CONFIG } from '../config.js?v=202610271558';
+import { escapeHtml } from '../utils/dom.js?v=202610271558';
 
 const ICON_CALL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
 const ICON_SMS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 10h8M8 13h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';

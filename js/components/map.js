@@ -1,6 +1,6 @@
-import { CONFIG } from '../config.js?v=202610271551';
-import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js?v=202610271551';
-import { loadKakao } from '../utils/kakao.js?v=202610271551';
+import { CONFIG } from '../config.js?v=202610271558';
+import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js?v=202610271558';
+import { loadKakao } from '../utils/kakao.js?v=202610271558';
 
 const STORE = {
   tmap: isIOS ? 'https://apps.apple.com/kr/app/id431589174' : 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku',
@@ -102,15 +102,22 @@ function renderRoughmap(container) {
   return height; // 아래 '길찾기 · 지도 크게 보기' 줄은 잠금 막이 덮지 않도록 지도 높이만 돌려줌
 }
 
-const COPY_PILL = '<button type="button" class="copy-pill" data-copy-address>복사하기</button>';
+// 주소·전화 옆 '복사하기' 버튼. data-copy 값으로 무엇을 복사할지 구분
+const COPY_TARGETS = {
+  address: { value: () => place.address, message: '주소가 복사되었습니다.' },
+  tel: { value: () => place.tel, message: '전화번호가 복사되었습니다.' },
+};
+const copyPill = (kind) => `<button type="button" class="copy-pill" data-copy="${kind}">복사하기</button>`;
 
-/** 카카오 지도 퍼가기 아래의 '주소' 줄 옆에 복사 버튼을 붙인다 (해당 줄은 비동기로 그려짐) */
+/** 카카오 지도 퍼가기 아래의 '주소'·'전화' 줄 옆에 복사 버튼을 붙인다 (해당 줄은 비동기로 그려짐) */
 function addCopyButtonToRoughmap(container) {
   const attach = () => {
-    // 주소 글자(span.txt) 바로 뒤에 붙여야 같은 줄에 나란히 놓인다
+    // 글자(span.txt) 바로 뒤에 붙여야 같은 줄에 나란히 놓인다
     const addr = container.querySelector('.section_address .address .txt');
-    if (!addr || addr.querySelector('[data-copy-address]')) return Boolean(addr);
-    addr.insertAdjacentHTML('beforeend', COPY_PILL);
+    if (!addr) return false;
+    const tel = container.querySelector('.section_address .phone .txt');
+    if (!addr.querySelector('[data-copy]')) addr.insertAdjacentHTML('beforeend', copyPill('address'));
+    if (tel && place.tel && !tel.querySelector('[data-copy]')) tel.insertAdjacentHTML('beforeend', copyPill('tel'));
     return true;
   };
   if (attach()) return;
@@ -124,8 +131,8 @@ function addressInfoHtml() {
   const v = place;
   return `
     <dl class="map-info">
-      <div><dt>주소</dt><dd>${escapeHtml(v.address)} ${COPY_PILL}</dd></div>
-      ${v.tel ? `<div><dt>전화</dt><dd><a href="tel:${escapeHtml(v.tel)}">${escapeHtml(v.tel)}</a></dd></div>` : ''}
+      <div><dt>주소</dt><dd>${escapeHtml(v.address)} ${copyPill('address')}</dd></div>
+      ${v.tel ? `<div><dt>전화</dt><dd><a href="tel:${escapeHtml(v.tel)}">${escapeHtml(v.tel)}</a> ${copyPill('tel')}</dd></div>` : ''}
     </dl>`;
 }
 
@@ -188,9 +195,10 @@ export function initMap(mount) {
         <div class="transport__item"><dt>${escapeHtml(t.title)}</dt><dd>${(t.lines || [t.body]).map(escapeHtml).join('<br>')}</dd></div>`).join('')}
     </dl>`;
 
-  // 주소 복사 버튼 (지도 아래 주소 옆, 지도 종류와 상관없이 위임으로 처리)
+  // 주소·전화 복사 버튼 (지도 아래, 지도 종류와 상관없이 위임으로 처리)
   mount.addEventListener('click', (e) => {
-    if (e.target.closest('[data-copy-address]')) copyText(v.address, '주소가 복사되었습니다.');
+    const target = COPY_TARGETS[e.target.closest('[data-copy]')?.dataset.copy];
+    if (target) copyText(target.value(), target.message);
   });
   mount.querySelectorAll('[data-nav]').forEach((btn) => btn.addEventListener('click', () => NAV[btn.dataset.nav]()));
 
