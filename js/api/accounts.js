@@ -3,8 +3,8 @@
  * Apps Script에 ACCESS_KEY를 설정했다면 청첩장 링크의 ?key= 값이 함께 전달되어야 한다.
  * 응답 형식: { ok: true, data } | { ok: false, error }
  */
-import { CONFIG } from '../config.js';
-import { mockApi } from './mock.js';
+import { CONFIG } from '../config.js?v=202610271533';
+import { mockApi } from './mock.js?v=202610271533';
 
 export const isAccountsDemo = !CONFIG.accountsApiUrl;
 

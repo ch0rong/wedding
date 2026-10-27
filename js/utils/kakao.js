@@ -1,5 +1,5 @@
-import { CONFIG } from '../config.js';
-import { loadScript } from './dom.js';
+import { CONFIG } from '../config.js?v=202610271533';
+import { loadScript } from './dom.js?v=202610271533';
 
 const KAKAO_SDK = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js';
 

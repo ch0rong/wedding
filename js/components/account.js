@@ -1,5 +1,5 @@
-import { getAccounts, isAccountsDemo } from '../api/accounts.js';
-import { copyText, escapeHtml } from '../utils/dom.js';
+import { getAccounts, isAccountsDemo } from '../api/accounts.js?v=202610271533';
+import { copyText, escapeHtml } from '../utils/dom.js?v=202610271533';
 
 const GROUPS = [
   { key: 'groom', label: '신랑측 계좌번호' },

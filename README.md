@@ -76,6 +76,8 @@ start.bat                   로컬 미리보기 실행
 
 ## 5. GitHub Pages 배포
 
+> 수정 후 올리기 전에 `node tools/bump-version.mjs` 를 한 번 실행하세요. JS/CSS 주소의 `?v=` 값이 바뀌어서, 하객 브라우저(카카오톡 인앱·웨일 등)가 예전 파일을 붙잡고 있어도 새 파일을 받습니다.
+
 1. 이 폴더를 GitHub 저장소에 push
 2. **Settings → Pages → Deploy from a branch → main / (root)**
 3. `https://아이디.github.io/저장소명/` 으로 접속

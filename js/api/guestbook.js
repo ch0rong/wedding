@@ -7,8 +7,8 @@
  *
  * CONFIG.supabase가 비어 있으면 mock(localStorage)으로 동작한다.
  */
-import { CONFIG } from '../config.js';
-import { mockApi } from './mock.js';
+import { CONFIG } from '../config.js?v=202610271533';
+import { mockApi } from './mock.js?v=202610271533';
 
 const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
 

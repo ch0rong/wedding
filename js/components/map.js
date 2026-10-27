@@ -1,6 +1,6 @@
-import { CONFIG } from '../config.js';
-import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js';
-import { loadKakao } from '../utils/kakao.js';
+import { CONFIG } from '../config.js?v=202610271533';
+import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js?v=202610271533';
+import { loadKakao } from '../utils/kakao.js?v=202610271533';
 
 const STORE = {
   tmap: isIOS ? 'https://apps.apple.com/kr/app/id431589174' : 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku',

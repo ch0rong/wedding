@@ -1,6 +1,6 @@
-import { CONFIG } from '../config.js';
-import { escapeHtml } from '../utils/dom.js';
-import { WEEKDAYS_EN, dotDate, timeEn, weddingWeekday } from '../utils/date.js';
+import { CONFIG } from '../config.js?v=202610271533';
+import { escapeHtml } from '../utils/dom.js?v=202610271533';
+import { WEEKDAYS_EN, dotDate, timeEn, weddingWeekday } from '../utils/date.js?v=202610271533';
 
 /** Section 1: 메인 사진을 위/왼쪽/오른쪽 손글씨 텍스트가 감싸는 프레임 */
 export function initHero(mount) {

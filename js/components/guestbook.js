@@ -1,6 +1,6 @@
-import { guestbookApi as api, isGuestbookDemo } from '../api/guestbook.js';
-import { escapeHtml, formatDateTime, toast } from '../utils/dom.js';
-import { openModal } from '../utils/modal.js';
+import { guestbookApi as api, isGuestbookDemo } from '../api/guestbook.js?v=202610271533';
+import { escapeHtml, formatDateTime, toast } from '../utils/dom.js?v=202610271533';
+import { openModal } from '../utils/modal.js?v=202610271533';
 
 const PAGE_SIZE = 5;
 // supabase/schema.sql의 검증 값과 같게 유지

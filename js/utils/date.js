@@ -1,5 +1,5 @@
-import { CONFIG } from '../config.js';
-import { pad2 } from './dom.js';
+import { CONFIG } from '../config.js?v=202610271533';
+import { pad2 } from './dom.js?v=202610271533';
 
 export const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'];
 export const WEEKDAYS_EN = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
