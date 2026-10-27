@@ -1,6 +1,6 @@
-import { CONFIG } from '../config.js?v=202610271558';
-import { escapeHtml } from '../utils/dom.js?v=202610271558';
-import { WEEKDAYS, dayDiffKST, timeKo, weekdayOf, weddingInstant } from '../utils/date.js?v=202610271558';
+import { CONFIG } from '../config.js?v=202610271608';
+import { escapeHtml } from '../utils/dom.js?v=202610271608';
+import { WEEKDAYS, dayDiffKST, timeKo, weekdayOf, weddingInstant } from '../utils/date.js?v=202610271608';
 
 function gridHtml() {
   const { year, month, day } = CONFIG.wedding;

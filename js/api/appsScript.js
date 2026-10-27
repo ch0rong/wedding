@@ -4,7 +4,7 @@
  *
  * POST는 Content-Type을 text/plain으로 보내야 CORS preflight 없이 Apps Script에 도달한다.
  */
-import { CONFIG } from '../config.js?v=202610271558';
+import { CONFIG } from '../config.js?v=202610271608';
 
 export const hasAppsScript = Boolean(CONFIG.appsScriptUrl);
 

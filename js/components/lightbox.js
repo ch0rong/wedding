@@ -1,5 +1,5 @@
-import { escapeHtml } from '../utils/dom.js?v=202610271558';
-import { createCarousel } from './carousel.js?v=202610271558';
+import { escapeHtml } from '../utils/dom.js?v=202610271608';
+import { createCarousel } from './carousel.js?v=202610271608';
 
 /**
  * 전체화면 사진 보기. 좌우 스와이프로 넘기고, 아래로 끌어내리거나 X/배경/ESC로 닫는다.

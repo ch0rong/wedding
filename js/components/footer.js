@@ -1,6 +1,6 @@
-import { CONFIG } from '../config.js?v=202610271558';
-import { copyText, escapeHtml } from '../utils/dom.js?v=202610271558';
-import { loadKakao } from '../utils/kakao.js?v=202610271558';
+import { CONFIG } from '../config.js?v=202610271608';
+import { copyText, escapeHtml } from '../utils/dom.js?v=202610271608';
+import { loadKakao } from '../utils/kakao.js?v=202610271608';
 
 /** 공유 링크에서 #해시는 빼고, 계좌용 ?key= 는 유지 */
 const shareUrl = () => location.href.split('#')[0];

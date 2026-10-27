@@ -1,6 +1,6 @@
-import { guestbookApi as api, isGuestbookDemo } from '../api/guestbook.js?v=202610271558';
-import { escapeHtml, formatDateTime, toast } from '../utils/dom.js?v=202610271558';
-import { openModal } from '../utils/modal.js?v=202610271558';
+import { guestbookApi as api, isGuestbookDemo } from '../api/guestbook.js?v=202610271608';
+import { escapeHtml, formatDateTime, toast } from '../utils/dom.js?v=202610271608';
+import { openModal } from '../utils/modal.js?v=202610271608';
 
 const PAGE_SIZE = 5;
 // gas/Code.gs의 LIMITS와 같게 유지

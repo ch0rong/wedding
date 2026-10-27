@@ -114,8 +114,12 @@ export const CONFIG = {
   // 페이지 맨 아래 문구
   copyright: '© 2026 Taepyeong ♥ Gyumin',
 
+  // 배경음악: 들어올 때마다 이 중 하나를 무작위로 재생. 우측 상단 ♪ 버튼에서 직접 고를 수도 있음
   music: {
-    src: 'assets/music/bgm.mp3',
+    tracks: [
+      { title: '음악 1', src: 'assets/music/bgm.mp3' },
+      { title: '음악 2', src: 'assets/music/bgm2.mp3' },
+    ],
     volume: 0.4,
   },
 };
