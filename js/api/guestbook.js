@@ -6,8 +6,8 @@
  *
  * CONFIG.appsScriptUrl이 비어 있으면 mock(localStorage)으로 동작한다.
  */
-import { gasGet, gasPost, hasAppsScript } from './appsScript.js?v=202610271540';
-import { mockApi } from './mock.js?v=202610271540';
+import { gasGet, gasPost, hasAppsScript } from './appsScript.js?v=202610271551';
+import { mockApi } from './mock.js?v=202610271551';
 
 export const isGuestbookDemo = !hasAppsScript;
 

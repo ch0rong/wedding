@@ -1,5 +1,5 @@
-import { CONFIG } from '../config.js?v=202610271540';
-import { toast } from '../utils/dom.js?v=202610271540';
+import { CONFIG } from '../config.js?v=202610271551';
+import { toast } from '../utils/dom.js?v=202610271551';
 
 // 브라우저가 "사용자 동작"으로 인정해 재생을 허용하는 이벤트들
 const ACTIVATION_EVENTS = ['pointerup', 'touchend', 'click', 'keydown'];

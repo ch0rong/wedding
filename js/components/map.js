@@ -1,6 +1,6 @@
-import { CONFIG } from '../config.js?v=202610271540';
-import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js?v=202610271540';
-import { loadKakao } from '../utils/kakao.js?v=202610271540';
+import { CONFIG } from '../config.js?v=202610271551';
+import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js?v=202610271551';
+import { loadKakao } from '../utils/kakao.js?v=202610271551';
 
 const STORE = {
   tmap: isIOS ? 'https://apps.apple.com/kr/app/id431589174' : 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku',
@@ -102,6 +102,33 @@ function renderRoughmap(container) {
   return height; // 아래 '길찾기 · 지도 크게 보기' 줄은 잠금 막이 덮지 않도록 지도 높이만 돌려줌
 }
 
+const COPY_PILL = '<button type="button" class="copy-pill" data-copy-address>복사하기</button>';
+
+/** 카카오 지도 퍼가기 아래의 '주소' 줄 옆에 복사 버튼을 붙인다 (해당 줄은 비동기로 그려짐) */
+function addCopyButtonToRoughmap(container) {
+  const attach = () => {
+    // 주소 글자(span.txt) 바로 뒤에 붙여야 같은 줄에 나란히 놓인다
+    const addr = container.querySelector('.section_address .address .txt');
+    if (!addr || addr.querySelector('[data-copy-address]')) return Boolean(addr);
+    addr.insertAdjacentHTML('beforeend', COPY_PILL);
+    return true;
+  };
+  if (attach()) return;
+  const observer = new MutationObserver(() => attach() && observer.disconnect());
+  observer.observe(container, { childList: true, subtree: true });
+  setTimeout(() => observer.disconnect(), 10000);
+}
+
+/** 카카오 지도 퍼가기를 못 쓸 때 지도 아래에 보여 줄 주소·전화 */
+function addressInfoHtml() {
+  const v = place;
+  return `
+    <dl class="map-info">
+      <div><dt>주소</dt><dd>${escapeHtml(v.address)} ${COPY_PILL}</dd></div>
+      ${v.tel ? `<div><dt>전화</dt><dd><a href="tel:${escapeHtml(v.tel)}">${escapeHtml(v.tel)}</a></dd></div>` : ''}
+    </dl>`;
+}
+
 /**
  * 스크롤하다가 지도가 손가락에 끌려가지 않도록 기본은 잠금.
  * 투명한 막으로 지도를 덮고, 자물쇠 버튼을 누르면 막을 걷는다.
@@ -146,11 +173,6 @@ export function initMap(mount) {
   mount.innerHTML = `
     <div class="venue">
       <p class="venue__name">${escapeHtml(v.name)}${v.hall ? ` <span>${escapeHtml(v.hall)}</span>` : ''}</p>
-      <p class="venue__addr">
-        ${escapeHtml(v.address)}
-        <button type="button" class="text-btn" data-action="copy">주소 복사</button>
-      </p>
-      ${v.tel ? `<a class="venue__tel" href="tel:${escapeHtml(v.tel)}">${escapeHtml(v.tel)}</a>` : ''}
     </div>
 
     <div class="map" id="map" aria-label="웨딩홀 위치 지도"><p class="map__loading">지도를 불러오는 중…</p></div>
@@ -166,7 +188,10 @@ export function initMap(mount) {
         <div class="transport__item"><dt>${escapeHtml(t.title)}</dt><dd>${(t.lines || [t.body]).map(escapeHtml).join('<br>')}</dd></div>`).join('')}
     </dl>`;
 
-  mount.querySelector('[data-action=copy]').addEventListener('click', () => copyText(v.address, '주소가 복사되었습니다.'));
+  // 주소 복사 버튼 (지도 아래 주소 옆, 지도 종류와 상관없이 위임으로 처리)
+  mount.addEventListener('click', (e) => {
+    if (e.target.closest('[data-copy-address]')) copyText(v.address, '주소가 복사되었습니다.');
+  });
   mount.querySelectorAll('[data-nav]').forEach((btn) => btn.addEventListener('click', () => NAV[btn.dataset.nav]()));
 
   // 지도 우선순위: 카카오 지도 퍼가기 → 카카오 JS 지도 → 구글 지도 임베드
@@ -174,12 +199,17 @@ export function initMap(mount) {
   const rough = CONFIG.kakaoRoughmap || {};
   if (rough.timestamp && rough.key && window.daum?.roughmap?.Lander) {
     setupMapLock(container, renderRoughmap(container));
-  } else if (CONFIG.kakaoJsKey) {
-    renderKakaoMap(container)
-      .catch(() => renderEmbedMap(container))
-      .finally(() => setupMapLock(container));
+    addCopyButtonToRoughmap(container);
   } else {
-    renderEmbedMap(container);
-    setupMapLock(container);
+    // 카카오 지도 퍼가기가 아니면 주소·전화 줄이 없으므로 지도 아래에 직접 표시
+    container.insertAdjacentHTML('afterend', addressInfoHtml());
+    if (CONFIG.kakaoJsKey) {
+      renderKakaoMap(container)
+        .catch(() => renderEmbedMap(container))
+        .finally(() => setupMapLock(container));
+    } else {
+      renderEmbedMap(container);
+      setupMapLock(container);
+    }
   }
 }

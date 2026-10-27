@@ -399,9 +399,39 @@ a { color: inherit; }
 .venue { margin-bottom: 24px; text-align: center; }
 .venue__name { margin: 0; font-size: 18px; font-weight: 600; color: var(--navy); }
 .venue__name span { font-size: 15px; font-weight: 400; color: var(--muted); }
-.venue__addr { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
-.venue__addr .text-btn { margin-left: 4px; }
-.venue__tel { display: inline-block; margin-top: 4px; font-size: 14px; color: var(--navy); }
+
+/* 주소 옆 가로 타원형 '복사하기' 버튼 (카카오 지도 아래 주소 줄에도 들어감)
+   카카오 지도 퍼가기의 초기화 스타일보다 우선하도록 선택자를 두 번 겹침 */
+.copy-pill.copy-pill {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 1px 10px;
+  border: 1px solid #c9c9d6;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--navy);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  line-height: 1.7;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.copy-pill.copy-pill:active { background: #f0f0f4; }
+
+/* 카카오 지도 퍼가기를 못 쓸 때의 주소·전화 줄 */
+.map-info {
+  display: grid;
+  gap: 6px;
+  margin: -4px calc(var(--pad-x) * -1) 16px;
+  padding: 14px var(--pad-x);
+  background: #eef0f0;
+  font-size: 13px;
+}
+.map-info div { display: flex; gap: 14px; align-items: center; }
+.map-info dt { flex: none; width: 28px; font-weight: 600; }
+.map-info dd { margin: 0; }
+.map-info a { color: inherit; text-decoration: none; }
 
 .map {
   height: 280px;
