@@ -1,9 +1,9 @@
-import { guestbookApi as api, isGuestbookDemo } from '../api/guestbook.js?v=202610271533';
-import { escapeHtml, formatDateTime, toast } from '../utils/dom.js?v=202610271533';
-import { openModal } from '../utils/modal.js?v=202610271533';
+import { guestbookApi as api, isGuestbookDemo } from '../api/guestbook.js?v=202610271540';
+import { escapeHtml, formatDateTime, toast } from '../utils/dom.js?v=202610271540';
+import { openModal } from '../utils/modal.js?v=202610271540';
 
 const PAGE_SIZE = 5;
-// supabase/schema.sql의 검증 값과 같게 유지
+// gas/Code.gs의 LIMITS와 같게 유지
 const LIMITS = { name: 20, message: 500, pwMin: 4, pwMax: 20 };
 
 function validate({ name, password, message }) {
@@ -36,7 +36,7 @@ const pwField = `
     <input name="password" type="password" maxlength="${LIMITS.pwMax}" autocomplete="current-password" required>
   </label>`;
 
-/** Section 7: 방명록 (Supabase) */
+/** Section 7: 방명록 (구글 스프레드시트) */
 export function initGuestbook(mount) {
   mount.innerHTML = `
     ${isGuestbookDemo ? '<p class="demo-badge">데모 · 이 기기에만 저장됩니다</p>' : ''}

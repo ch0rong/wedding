@@ -1,4 +1,4 @@
-import { attachSwipe } from '../utils/swipe.js?v=202610271533';
+import { attachSwipe } from '../utils/swipe.js?v=202610271540';
 
 /**
  * 좌우 스와이프 캐러셀. 사진첩 슬라이더와 라이트박스가 같이 쓴다.

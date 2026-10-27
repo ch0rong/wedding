@@ -494,7 +494,7 @@ a { color: inherit; }
 .transport__item { padding: 16px 0; border-top: 1px solid var(--line); }
 .transport__item:last-child { border-bottom: 1px solid var(--line); }
 .transport__item dt { margin-bottom: 4px; font-size: 14px; font-weight: 600; color: var(--navy); }
-.transport__item dd { margin: 0; font-size: 14px; }
+.transport__item dd { margin: 0; font-size: 14px; line-height: 1.75; }
 
 /* =========================================================
    9. Section 5 · 사진첩

@@ -57,22 +57,44 @@ export const CONFIG = {
     // 지도 앱 장소 페이지 (PC나 앱이 없을 때 열림)
     naverPlaceUrl: 'https://map.naver.com/p/entry/place/33666423',
     kakaoPlaceUrl: 'https://map.kakao.com/link/map/621225302',
+    // 교통 안내: lines 한 줄 = 화면의 한 줄
     transport: [
-      { title: '지하철', body: '1호선 · 인천2호선 주안역 하차 (출구/도보 시간 확인 후 수정)' },
-      { title: '버스', body: '주안역 정류장 하차 (노선 확인 후 수정)' },
-      { title: '주차', body: '웨딩홀 주차장 이용 가능 (무료 주차 시간 확인 후 수정)' },
+      {
+        title: '지하철',
+        lines: [
+          '1호선 주안역 하차 → 지하상가 2번 출구, 지상 1번 출구 도보 1분',
+          '인천지하철 2호선 주안역 → 5번 출구 도보 1분',
+        ],
+      },
+      {
+        title: '버스 (주안역 앞 하차)',
+        lines: [
+          '일반버스 3, 5, 5-1, 6, 6-1, 38, 41, 63, 65, 65-1, 70',
+          '마을버스 511, 514, 514-1, 515, 516, 518, 522, 523',
+        ],
+      },
+      {
+        title: '승용차',
+        lines: [
+          '제1경인고속도로: 도화IC → 도화사거리 우회전(200m) → 주안역',
+          '(주안역 직진 → 식약청 유턴 → 다시 주안역)',
+          '제2경인고속도로: 남동IC 지나 문학IC로 나옴 → 시민공원 → 주안역',
+          '(주안역 삼거리 우회전 → 식약청 유턴 → 다시 주안역)',
+        ],
+      },
+      {
+        title: '주차',
+        lines: [
+          '건물 내 지하 1층 ~ 지상 6층 주차장',
+          '주차장 이용 시 1시간 30분 무료',
+        ],
+      },
     ],
   },
 
-  // 계좌 정보: Google Apps Script 웹앱 URL (비우면 데모 계좌 표시)
-  accountsApiUrl: 'https://script.google.com/macros/s/AKfycbyhtyUGp0bpzKBd0Ma1xu-l9nvMC-ytNFpU6F7mwr2X1ERQXoQ1S2csckUCNAnPap58/exec',
-
-  // 방명록: Supabase 프로젝트 (비우면 이 기기에만 저장되는 데모 모드)
-  // anon key는 공개되어도 되는 키입니다. 보안은 supabase/schema.sql의 RLS + RPC 함수가 담당합니다.
-  supabase: {
-    url: '', // 예: 'https://xxxx.supabase.co'
-    anonKey: '',
-  },
+  // Google Apps Script 웹앱 URL — 계좌 정보 + 방명록(구글 스프레드시트) 공용
+  // 비우면 데모 모드 (계좌는 가짜, 방명록은 이 기기에만 저장)
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbyhtyUGp0bpzKBd0Ma1xu-l9nvMC-ytNFpU6F7mwr2X1ERQXoQ1S2csckUCNAnPap58/exec',
 
   // 카카오맵 '지도 퍼가기' 값 (키 발급 불필요). 카카오맵 > 장소 > 공유 > 지도 퍼가기 코드의 timestamp, key
   // 비우면 아래 kakaoJsKey 지도 → 구글 지도 순으로 대체

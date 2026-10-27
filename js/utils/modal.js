@@ -1,4 +1,4 @@
-import { escapeHtml } from './dom.js?v=202610271533';
+import { escapeHtml } from './dom.js?v=202610271540';
 
 /**
  * 간단한 확인용 모달.

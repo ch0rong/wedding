@@ -1,13 +1,13 @@
-import { CONFIG } from './config.js?v=202610271533';
-import { initMusic } from './components/music.js?v=202610271533';
-import { initHero } from './components/hero.js?v=202610271533';
-import { initGreeting } from './components/greeting.js?v=202610271533';
-import { initCalendar } from './components/calendar.js?v=202610271533';
-import { initMap } from './components/map.js?v=202610271533';
-import { initGallery } from './components/gallery.js?v=202610271533';
-import { initAccount } from './components/account.js?v=202610271533';
-import { initGuestbook } from './components/guestbook.js?v=202610271533';
-import { initFooter } from './components/footer.js?v=202610271533';
+import { CONFIG } from './config.js?v=202610271540';
+import { initMusic } from './components/music.js?v=202610271540';
+import { initHero } from './components/hero.js?v=202610271540';
+import { initGreeting } from './components/greeting.js?v=202610271540';
+import { initCalendar } from './components/calendar.js?v=202610271540';
+import { initMap } from './components/map.js?v=202610271540';
+import { initGallery } from './components/gallery.js?v=202610271540';
+import { initAccount } from './components/account.js?v=202610271540';
+import { initGuestbook } from './components/guestbook.js?v=202610271540';
+import { initFooter } from './components/footer.js?v=202610271540';
 
 /**
  * 섹션 id → 초기화 함수. 위에서부터 스크롤 순서대로.

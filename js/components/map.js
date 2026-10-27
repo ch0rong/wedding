@@ -1,6 +1,6 @@
-import { CONFIG } from '../config.js?v=202610271533';
-import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js?v=202610271533';
-import { loadKakao } from '../utils/kakao.js?v=202610271533';
+import { CONFIG } from '../config.js?v=202610271540';
+import { copyText, escapeHtml, isIOS, isMobile, loadScript, toast } from '../utils/dom.js?v=202610271540';
+import { loadKakao } from '../utils/kakao.js?v=202610271540';
 
 const STORE = {
   tmap: isIOS ? 'https://apps.apple.com/kr/app/id431589174' : 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku',
@@ -163,7 +163,7 @@ export function initMap(mount) {
 
     <dl class="transport">
       ${v.transport.map((t) => `
-        <div class="transport__item"><dt>${escapeHtml(t.title)}</dt><dd>${escapeHtml(t.body)}</dd></div>`).join('')}
+        <div class="transport__item"><dt>${escapeHtml(t.title)}</dt><dd>${(t.lines || [t.body]).map(escapeHtml).join('<br>')}</dd></div>`).join('')}
     </dl>`;
 
   mount.querySelector('[data-action=copy]').addEventListener('click', () => copyText(v.address, '주소가 복사되었습니다.'));
