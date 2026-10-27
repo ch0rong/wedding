@@ -65,7 +65,7 @@ export const CONFIG = {
   },
 
   // 계좌 정보: Google Apps Script 웹앱 URL (비우면 데모 계좌 표시)
-  accountsApiUrl: '',
+  accountsApiUrl: 'https://script.google.com/macros/s/AKfycbyhtyUGp0bpzKBd0Ma1xu-l9nvMC-ytNFpU6F7mwr2X1ERQXoQ1S2csckUCNAnPap58/exec',
 
   // 방명록: Supabase 프로젝트 (비우면 이 기기에만 저장되는 데모 모드)
   // anon key는 공개되어도 되는 키입니다. 보안은 supabase/schema.sql의 RLS + RPC 함수가 담당합니다.
